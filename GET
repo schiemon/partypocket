@@ -1,0 +1,11 @@
+HTTP/1.1 200 OK
+Cache-Control: no-store, must-revalidate
+X-Powered-By: Next.js
+ETag: "7e8-w8oDvqHq5KcFRe0FWib8Jq2Q2JM"
+Content-Type: text/html; charset=utf-8
+Content-Length: 2024
+Vary: Accept-Encoding
+Date: Tue, 02 Nov 2021 09:06:53 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+

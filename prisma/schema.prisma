@@ -2,10 +2,46 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["interactiveTransactions"]
+}
+
+// TODO: updated_at created_at
+
+model User {
+  id             String  @id @default(cuid())
+  sub            String  @unique
+  hosted_parties Party[]
+}
+
+model Party {
+  id             String  @id @default(cuid())
+  name           String
+  description    String?
+  host           User    @relation(fields: [host_id], references: [id])
+  host_id        String
+  cost_per_guest Int
+  guests         Guest[]
+
+  @@unique([name, host_id], name: "uniq_party_name_host_id")
+}
+
+// TODO: There should only be one guest per party with the same name.
+// TODO: How to handle currencies?
+// TODO: App should handle following case: Two users get the same name.
+//
+// TODO: App should handle following case: Two users get the same code.
+model Guest {
+  id       String @id @default(cuid())
+  name     String
+  party_id String
+  party    Party  @relation(fields: [party_id], references: [id])
+  paid     Int    @default(0)
+
+  @@unique([name, party_id], name: "uniq_guest_name_partyId")
 }
